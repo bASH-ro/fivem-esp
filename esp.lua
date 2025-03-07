@@ -76,20 +76,3 @@ function DrawText3D(x, y, z, text, isTalking)
         DrawText(_x, _y)
     end
 end
-
-function GetPedBoneCoordsF(ped, boneId)
-    local cam = GetFinalRenderedCamCoord()
-    local boneCoords = GetPedBoneCoords(ped, boneId)
-
-    local ret, hit, shape = GetShapeTestResult(
-        StartShapeTestRay(cam, boneCoords, -1)
-    )
-
-    if hit then
-        local a = Vdist(cam, shape) / Vdist(cam, boneCoords)
-        if a > 1 then a = 0.83 end
-        return ((boneCoords - cam) * (a * 0.83)) + cam
-    end
-
-    return boneCoords
-end
